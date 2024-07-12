@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assignment Resolution</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        #resolveForm {
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 50%;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #resolveForm input[type="text"],
+        #resolveForm textarea,
+        #resolveForm select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        #resolveForm textarea {
+            height: 100px;
+        }
+        #resolveForm button {
+            padding: 10px 15px;
+            background-color: #520569;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #resolveForm button:hover {
+            background-color: #73089e;
+        }
+        #declineDetails {
+            display: none;
+            margin-top: 20px;
+            border-top: 1px solid #ccc;
+            padding-top: 20px;
+        }
+        #declineDetails input[type="date"],
+        #declineDetails input[type="time"] {
+            width: calc(50% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        #modalBackdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        #modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        #logo {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        #logo img {
+            max-width: 150px;
+            max-height: 75px;
+        }
+    </style>
+    <script>
+        function toggleDeclineDetails() {
+            var action = document.querySelector('input[name="action"]:checked').value;
+            var declineDetails = document.getElementById('declineDetails');
+            if (action === 'decline') {
+                declineDetails.style.display = 'block';
+                showModal();
+            } else {
+                declineDetails.style.display = 'none';
+                closeModal();
+            }
+        }
+
+        function showModal() {
+            document.getElementById('modalBackdrop').style.display = 'block';
+            document.getElementById('modal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('modalBackdrop').style.display = 'none';
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function saveDeadline() {
+            var newDeadlineDate = document.getElementById('modal_new_deadline_date').value;
+            var newDeadlineTime = document.getElementById('modal_new_deadline_time').value;
+            document.getElementById('new_deadline_date').value = newDeadlineDate;
+            document.getElementById('new_deadline_time').value = newDeadlineTime;
+            closeModal();
+        }
+    </script>
+</head>
+<body>
+    <form id="resolveForm" enctype="multipart/form-data" method="post" action="http://10.32.228.86.:8080/form">
+        <div style="text-align: center; font-size: xx-large; font-weight: bolder; font-family: Georgia, 'Times New Roman', Times, serif; font-variant: small-caps; color: #490039;">
+            TFG
+        </div>
+        <div style="text-align: center; font-size: xx-large; font-weight: bolder; font-family: Georgia, 'Times New Roman', Times, serif; font-variant: small-caps; color: #490039;">
+            6-S
+        </div>
+        <div id="logo">
+            <img src="https://i.imgur.com/TgWBcYB.png" alt="Company Logo">
+        </div>
+
+        <div style="text-align: center; font-size: x-large; font-weight: 300; color: #490039; font-family: Georgia, 'TimesNew Roman', Times, serif;">
+            Incident Management System
+        </div>
+        <h2 style="text-align: center; font-size: x-large; font-weight: 300; color: #490039; font-family: Georgia, 'Times New Roman', Times, serif;">
+            Assignment Resolution
+        </h2>
+
+        <div class="form-group">
+            <label for="assignee">Assignee ID:</label>
+            <select id="assignee" name="assignee" required>
+                <option value="">Select Assignee</option>
+                <option value="munangiwa.chosen1@gmail.com">Munangiwa </option>
+                <option value="munangi123@outlook.com">Ravhura</option>
+                <!-- Add other assignees here -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="reference_number">Reference Number:</label>
+            <input type="text" id="reference_number" name="reference_number" required placeholder="Enter Reference Number">
+        </div>
+
+        <div class="form-group">
+            <label for="remarks">Remarks:</label>
+            <textarea id="remarks" name="remarks" required placeholder="Enter your remarks here"></textarea>
+        </div>
+
+        
+        <p><h4>Note: Set New deadline if Assignment Submission is Declined </h4></p>
+       
+            <div class="form-group">
+                <label for="new_deadline_date">New Deadline Date:</label>
+                <input type="date" id="new_deadline_date" name="new_deadline_date">
+            </div>
+            <h1></h1>
+            <div class="form-group">
+                <label for="new_deadline_time">New Deadline Time:</label>
+                <input type="time" id="new_deadline_time" name="new_deadline_time">
+            </div>
+       
+            <h1></h1>
+
+        <button type="submit">Submit Resolution</button>
+    </form>
+
+    <div id="modalBackdrop"></div>
+    <div id="modal">
+        <h2>New Deadline</h2>
+        <label for="modal_new_deadline_date">New Deadline Date:</label>
+        <input type="date" id="modal_new_deadline_date"><br>
+        <label for="modal_new_deadline_time">New Deadline Time:</label>
+        <input type="time" id="modal_new_deadline_time"><br>
+        <button type="button" onclick="saveDeadline()">Save</button>
+        <button type="button" onclick="closeModal()">Close</button>
+    </div>
+</body>
